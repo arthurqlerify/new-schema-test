@@ -1,0 +1,291 @@
+{
+  "$schema": "https://app.qlerify.com/schemas/domain-model/v1.json",
+  "version": 1,
+  "boundedContext": "Lead",
+  "roles": [
+    "Sales Rep",
+    "Sales Manager",
+    "Customer",
+    "Automation",
+    "Fulfillment",
+    "Support",
+    "Marketing"
+  ],
+  "domainEvents": [
+    {
+      "event": "Lead Created",
+      "role": "Sales Rep",
+      "follows": [
+        "start"
+      ],
+      "command": "Create Lead",
+      "aggregateRoot": "Lead",
+      "acceptanceCriteria": "Given a Sales Rep has identified a potential customer, When they create a lead with contact information and initial interest details, Then a Lead Created event is recorded with the lead's basic information."
+    },
+    {
+      "event": "Lead Qualified",
+      "role": "Sales Rep",
+      "follows": [
+        "Lead Created"
+      ],
+      "command": "Qualify Lead",
+      "aggregateRoot": "Lead",
+      "readModels": [
+        {
+          "name": "Lead Details"
+        }
+      ],
+      "acceptanceCriteria": "Given a Sales Rep has reviewed a created lead, When they assess the lead meets qualification criteria (budget, authority, need, timeline), Then a Lead Qualified event is recorded marking the lead as sales-ready."
+    }
+  ],
+  "schemas": {
+    "commands": [
+      {
+        "name": "Create Lead",
+        "type": "Command",
+        "fields": [
+          {
+            "name": "firstName"
+          },
+          {
+            "name": "lastName123"
+          },
+          {
+            "name": "email123"
+          },
+          {
+            "name": "phone"
+          },
+          {
+            "name": "company"
+          },
+          {
+            "name": "leadSource"
+          },
+          {
+            "name": "industry"
+          },
+          {
+            "name": "budget"
+          },
+          {
+            "name": "authority"
+          },
+          {
+            "name": "need"
+          },
+          {
+            "name": "timeline"
+          }
+        ]
+      },
+      {
+        "name": "Qualify Lead",
+        "type": "Command",
+        "fields": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "budget"
+          },
+          {
+            "name": "authority"
+          },
+          {
+            "name": "need"
+          },
+          {
+            "name": "timeline"
+          },
+          {
+            "name": "qualificationNotes"
+          },
+          {
+            "name": "leadSource"
+          },
+          {
+            "name": "industry"
+          },
+          {
+            "name": "email"
+          },
+          {
+            "name": "lastName"
+          }
+        ]
+      }
+    ],
+    "queries": [
+      {
+        "name": "Lead Details",
+        "type": "Query",
+        "entity": "Lead",
+        "fields": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "firstName"
+          },
+          {
+            "name": "lastName"
+          },
+          {
+            "name": "email"
+          },
+          {
+            "name": "phone"
+          },
+          {
+            "name": "company"
+          },
+          {
+            "name": "leadSource"
+          },
+          {
+            "name": "industry"
+          }
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "name": "Lead",
+        "type": "Entity",
+        "boundedContext": "Lead",
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "phone",
+          "company",
+          "leadSource",
+          "industry"
+        ],
+        "fields": [
+          {
+            "name": "id",
+            "exampleData": [
+              "lead-001",
+              "lead-002",
+              "lead-003"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "firstName",
+            "exampleData": [
+              "John",
+              "Sarah",
+              "Michael"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "lastName",
+            "exampleData": [
+              "Doe",
+              "Johnson",
+              "Smith"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "email",
+            "exampleData": [
+              "john.doe@acme.com",
+              "sarah.j@techcorp.com",
+              "m.smith@retail.com"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "phone",
+            "exampleData": [
+              "+1-555-0101",
+              "+1-555-0202",
+              "+1-555-0303"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "company",
+            "exampleData": [
+              "Acme Corp",
+              "TechCorp Inc",
+              "Retail Solutions"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "leadSource",
+            "exampleData": [
+              "Website",
+              "Referral",
+              "Trade Show"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "industry",
+            "exampleData": [
+              "Manufacturing",
+              "Technology",
+              "Retail"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "budget",
+            "exampleData": [
+              "50000",
+              "100000",
+              "75000"
+            ],
+            "dataType": "number"
+          },
+          {
+            "name": "authority",
+            "exampleData": [
+              "Decision Maker",
+              "Influencer",
+              "Decision Maker"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "need",
+            "exampleData": [
+              "CRM Solution",
+              "Sales Automation",
+              "Customer Support"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "timeline",
+            "exampleData": [
+              "Q2 2024",
+              "Q3 2024",
+              "Q1 2024"
+            ],
+            "dataType": "string"
+          },
+          {
+            "name": "qualificationNotes",
+            "exampleData": [
+              "Strong fit",
+              "Budget approved",
+              "Ready to proceed"
+            ],
+            "dataType": "string"
+          }
+        ]
+      }
+    ]
+  },
+  "groups": [],
+  "releases": []
+}
